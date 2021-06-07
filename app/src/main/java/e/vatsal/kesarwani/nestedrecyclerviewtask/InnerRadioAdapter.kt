@@ -4,48 +4,47 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import e.vatsal.kesarwani.nestedrecyclerviewtask.databinding.ItemOuterBinding
+import e.vatsal.kesarwani.nestedrecyclerviewtask.databinding.ItemInner1Binding
 
-class OuterAdapter : RecyclerView.Adapter<OuterAdapter.ViewHolder>() {
+class InnerRadioAdapter : RecyclerView.Adapter<InnerRadioAdapter.ViewHolder>() {
 
     private var list: ArrayList<String> = arrayListOf()
 
-    inner class ViewHolder(val binding: ItemOuterBinding) : RecyclerView.ViewHolder(binding.root)
+    private var lastSelectedPosition = -1
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OuterAdapter.ViewHolder =
+    inner class ViewHolder(val binding: ItemInner1Binding) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
-            ItemOuterBinding.inflate(
+            ItemInner1Binding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
         )
 
-    override fun onBindViewHolder(holder: OuterAdapter.ViewHolder, position: Int) {
-        val innerRadioAdapter = InnerRadioAdapter()
-        val innerCheckAdapter = InnerCheckAdapter()
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
-            tvRowName.text = list[position]
-
-            rvInnerRadio.adapter = innerRadioAdapter
-            innerRadioAdapter.setData(list)
-
-            rvInnerCheck.adapter = innerCheckAdapter
-            innerCheckAdapter.setData(list)
+            radioButton.text = list[position]
+            radioButton.setOnClickListener {
+                lastSelectedPosition = position
+                notifyDataSetChanged()
+            }
+            radioButton.isChecked = lastSelectedPosition == position
         }
     }
 
     override fun getItemCount(): Int = list.size
 
     fun setData(newList: ArrayList<String>) {
-        val toDoDiffUtil = DiffUtils(list, newList)
+        val toDoDiffUtil = DiffUtilsInnerRadio(list, newList)
         val toDoDiffResult = DiffUtil.calculateDiff(toDoDiffUtil)
         this.list = newList
         toDoDiffResult.dispatchUpdatesTo(this)
     }
 }
 
-class DiffUtils(
+class DiffUtilsInnerRadio(
     private val oldList: List<String>,
     private val newList: List<String>
 ) : DiffUtil.Callback() {

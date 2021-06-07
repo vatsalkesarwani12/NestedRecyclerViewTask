@@ -1,13 +1,13 @@
 package e.vatsal.kesarwani.nestedrecyclerviewtask
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import e.vatsal.kesarwani.nestedrecyclerviewtask.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMainBinding
-    private val list : ArrayList<String> = arrayListOf()
+    private lateinit var binding: ActivityMainBinding
+    private val list: ArrayList<String> = arrayListOf()
     private lateinit var outerAdapter: OuterAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {

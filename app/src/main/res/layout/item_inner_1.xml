@@ -5,18 +5,10 @@
     android:paddingEnd="5dp"
     android:paddingRight="5dp">
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
+    <RadioButton
+        android:id="@+id/radioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="RadioButton" />
-
-    </RadioGroup>
+        android:text="RadioButton" />
 
 </LinearLayout>
