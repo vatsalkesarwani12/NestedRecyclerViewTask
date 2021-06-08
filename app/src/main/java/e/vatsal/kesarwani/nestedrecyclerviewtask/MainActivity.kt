@@ -7,7 +7,7 @@ import e.vatsal.kesarwani.nestedrecyclerviewtask.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val list: ArrayList<String> = arrayListOf()
+    private val list: ArrayList<Model> = arrayListOf()
     private lateinit var outerAdapter: OuterAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,13 +27,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initArray() {
-        list.add("Hello")
-        list.add("this")
-        list.add("is")
-        list.add("my")
-        list.add("task")
-        list.add("for")
-        list.add("day")
-        list.add("one")
+        list.add(Model("Hello",true))
+        list.add(Model("this",false))
+        list.add(Model("is",true))
+        list.add(Model("my",false))
+        list.add(Model("task",true))
+        list.add(Model("for",false))
+        list.add(Model("day",true))
+        list.add(Model("one",false))
     }
 }

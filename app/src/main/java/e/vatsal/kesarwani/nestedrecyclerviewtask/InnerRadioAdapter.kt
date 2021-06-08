@@ -8,7 +8,7 @@ import e.vatsal.kesarwani.nestedrecyclerviewtask.databinding.ItemInner1Binding
 
 class InnerRadioAdapter : RecyclerView.Adapter<InnerRadioAdapter.ViewHolder>() {
 
-    private var list: ArrayList<String> = arrayListOf()
+    private var list: ArrayList<Model> = arrayListOf()
 
     private var lastSelectedPosition = -1
 
@@ -25,7 +25,7 @@ class InnerRadioAdapter : RecyclerView.Adapter<InnerRadioAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
-            radioButton.text = list[position]
+            radioButton.text = list[position].name
             radioButton.setOnClickListener {
                 lastSelectedPosition = position
                 notifyDataSetChanged()
@@ -36,7 +36,7 @@ class InnerRadioAdapter : RecyclerView.Adapter<InnerRadioAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = list.size
 
-    fun setData(newList: ArrayList<String>) {
+    fun setData(newList: ArrayList<Model>) {
         val toDoDiffUtil = DiffUtilsInnerRadio(list, newList)
         val toDoDiffResult = DiffUtil.calculateDiff(toDoDiffUtil)
         this.list = newList
@@ -45,8 +45,8 @@ class InnerRadioAdapter : RecyclerView.Adapter<InnerRadioAdapter.ViewHolder>() {
 }
 
 class DiffUtilsInnerRadio(
-    private val oldList: List<String>,
-    private val newList: List<String>
+    private val oldList: List<Model>,
+    private val newList: List<Model>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
@@ -62,6 +62,6 @@ class DiffUtilsInnerRadio(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+        return oldList[oldItemPosition].name == newList[newItemPosition].name
     }
 }

@@ -8,7 +8,7 @@ import e.vatsal.kesarwani.nestedrecyclerviewtask.databinding.ItemInner2Binding
 
 class InnerCheckAdapter : RecyclerView.Adapter<InnerCheckAdapter.ViewHolder>() {
 
-    private var list: ArrayList<String> = arrayListOf()
+    private var list: ArrayList<Model> = arrayListOf()
 
     inner class ViewHolder(val binding: ItemInner2Binding) : RecyclerView.ViewHolder(binding.root)
 
@@ -23,13 +23,13 @@ class InnerCheckAdapter : RecyclerView.Adapter<InnerCheckAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
-            checkbox.text = list[position]
+            checkbox.text = list[position].name
         }
     }
 
     override fun getItemCount(): Int = list.size
 
-    fun setData(newList: ArrayList<String>) {
+    fun setData(newList: ArrayList<Model>) {
         val toDoDiffUtil = DiffUtilsInnerCheck(list, newList)
         val toDoDiffResult = DiffUtil.calculateDiff(toDoDiffUtil)
         this.list = newList
@@ -38,8 +38,8 @@ class InnerCheckAdapter : RecyclerView.Adapter<InnerCheckAdapter.ViewHolder>() {
 }
 
 class DiffUtilsInnerCheck(
-    private val oldList: List<String>,
-    private val newList: List<String>
+    private val oldList: List<Model>,
+    private val newList: List<Model>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
@@ -55,6 +55,6 @@ class DiffUtilsInnerCheck(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+        return oldList[oldItemPosition].name == newList[newItemPosition].name
     }
 }

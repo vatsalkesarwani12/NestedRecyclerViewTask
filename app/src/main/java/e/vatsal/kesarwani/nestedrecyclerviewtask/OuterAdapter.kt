@@ -8,7 +8,7 @@ import e.vatsal.kesarwani.nestedrecyclerviewtask.databinding.ItemOuterBinding
 
 class OuterAdapter : RecyclerView.Adapter<OuterAdapter.ViewHolder>() {
 
-    private var list: ArrayList<String> = arrayListOf()
+    private var list: ArrayList<Model> = arrayListOf()
 
     inner class ViewHolder(val binding: ItemOuterBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -22,22 +22,27 @@ class OuterAdapter : RecyclerView.Adapter<OuterAdapter.ViewHolder>() {
         )
 
     override fun onBindViewHolder(holder: OuterAdapter.ViewHolder, position: Int) {
-        val innerRadioAdapter = InnerRadioAdapter()
-        val innerCheckAdapter = InnerCheckAdapter()
         holder.binding.apply {
-            tvRowName.text = list[position]
+            tvRowName.text = list[position].name
 
-            rvInnerRadio.adapter = innerRadioAdapter
-            innerRadioAdapter.setData(list)
-
-            rvInnerCheck.adapter = innerCheckAdapter
-            innerCheckAdapter.setData(list)
+            when (list[position].radio) {
+                true -> {
+                    val innerRadioAdapter = InnerRadioAdapter()
+                    rvInnerRadio.adapter = innerRadioAdapter
+                    innerRadioAdapter.setData(list)
+                }
+                false -> {
+                    val innerCheckAdapter = InnerCheckAdapter()
+                    rvInnerCheck.adapter = innerCheckAdapter
+                    innerCheckAdapter.setData(list)
+                }
+            }
         }
     }
 
     override fun getItemCount(): Int = list.size
 
-    fun setData(newList: ArrayList<String>) {
+    fun setData(newList: ArrayList<Model>) {
         val toDoDiffUtil = DiffUtils(list, newList)
         val toDoDiffResult = DiffUtil.calculateDiff(toDoDiffUtil)
         this.list = newList
@@ -46,8 +51,8 @@ class OuterAdapter : RecyclerView.Adapter<OuterAdapter.ViewHolder>() {
 }
 
 class DiffUtils(
-    private val oldList: List<String>,
-    private val newList: List<String>
+    private val oldList: List<Model>,
+    private val newList: List<Model>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
@@ -63,6 +68,6 @@ class DiffUtils(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+        return oldList[oldItemPosition].name == newList[newItemPosition].name
     }
 }
